@@ -1,3 +1,5 @@
+name: Run
+
 on:
   push:
     branches:
@@ -9,11 +11,11 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 16.x
       - run: yarn install
       - run: yarn build
       - run: yarn scrape
@@ -31,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload traces
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: traces
           path: traces/*.json
