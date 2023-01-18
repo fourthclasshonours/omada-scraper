@@ -8,7 +8,7 @@ export default async function patchNotes(
   const page = await browser.newPage();
   const turndownService = new TurndownService();
 
-  await page.goto('https://playoverwatch.com/en-gb/news/patch-notes/');
+  await page.goto('https://overwatch.blizzard.com/en-gb/news/patch-notes/');
 
   const results: PatchNotes[] = await page.evaluate(() => {
     const patches = [...document.querySelectorAll('.PatchNotes-patch')];
