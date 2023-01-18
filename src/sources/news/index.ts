@@ -4,41 +4,38 @@ import { News } from './model';
 export default async function news(browser: Browser): Promise<News[]> {
   const page = await browser.newPage();
 
-  await page.goto('https://playoverwatch.com/en-gb/news/');
+  await page.goto('https://overwatch.blizzard.com/en-gb/news/');
 
-  const featuredNews: News[] = await page.evaluate(() => {
-    const elements = [
-      ...document.querySelectorAll('.NewsHeader-featured .CardLink'),
-    ];
+  const news: News[] = await page.evaluate(() => {
+    const results: News[] = [];
 
-    return elements.map((elem) => ({
-      title: elem.querySelector('.Card-title')?.textContent ?? null,
-      link: (elem as HTMLAnchorElement).href ?? null,
-      image:
-        window
-          .getComputedStyle(elem.querySelector('.Card-thumbnail'))
-          .getPropertyValue('background-image')
-          ?.slice(4, -1)
-          .replace(/"/g, '') ?? null,
-      date: elem.querySelector('.Card-date')?.textContent ?? null,
-    }));
+    const elements = [...document.querySelectorAll('.news')];
+
+    for (const elem of elements) {
+      const imageElement = elem.querySelector('*[slot="image"]');
+      const image =
+        imageElement != null
+          ? `http:${imageElement.getAttribute('src')}`
+          : null;
+
+      const dateString = elem.querySelector('.date')?.textContent ?? null;
+      const date =
+        dateString != null ? new Date(dateString).toISOString() : null;
+
+      const item: News = {
+        title: elem.querySelector('h1[slot="heading"]')?.textContent ?? null,
+        link: (elem.parentElement as HTMLAnchorElement).href ?? null,
+        image,
+        summary:
+          elem.querySelector('.article-summary')?.textContent?.trim() ?? null,
+        date,
+      };
+
+      results.push(item);
+    }
+
+    return results;
   });
 
-  const otherNews: News[] = await page.evaluate(() => {
-    const elements = [...document.querySelectorAll('.NewsList-list .NewsItem')];
-
-    return elements.map((elem) => ({
-      title: elem.querySelector('.NewsItem-title')?.textContent ?? null,
-      link: (elem.querySelector('.CardLink') as HTMLAnchorElement).href ?? null,
-      image:
-        window
-          .getComputedStyle(elem.querySelector('.Card-thumbnail'))
-          .getPropertyValue('background-image')
-          ?.slice(4, -1)
-          .replace(/"/g, '') ?? null,
-      date: elem.querySelector('.NewsItem-subtitle')?.textContent ?? null,
-    }));
-  });
-
-  return [...featuredNews, ...otherNews];
+  return news;
 }
