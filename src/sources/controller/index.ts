@@ -117,7 +117,5 @@ export default async function controller(browser: Browser): Promise<Release[]> {
     });
   }
 
-  console.log({ releases });
-
   return releases;
 }
