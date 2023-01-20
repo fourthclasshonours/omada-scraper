@@ -1,8 +1,8 @@
 {
-  "name": "sg-scraper",
+  "name": "omada-scraper",
   "version": "1.0.0",
   "main": "main.js",
-  "repository": "git@github.com:bottleneckco/sg-scraper.git",
+  "repository": "git@github.com:bottleneckco/omada-scraper.git",
   "author": "Duncan Leo <hello@duncanleo.me>",
   "license": "MIT",
   "scripts": {

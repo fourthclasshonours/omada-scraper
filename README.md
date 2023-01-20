@@ -1,7 +1,13 @@
-# overwatch-scraper
-![.github/workflows/run.yml](https://github.com/bottleneckco/overwatch-scraper/workflows/.github/workflows/run.yml/badge.svg)
+# omada-scraper
+[![Run](https://github.com/fourthclasshonours/omada-scraper/actions/workflows/run.yml/badge.svg)](https://github.com/fourthclasshonours/omada-scraper/actions/workflows/run.yml)
 
-Scripts to scrape news and patch notes for the Overwatch video game.
+Scripts to scrape data for the Omada network system.
+
+For now, it supports:
+
+| Feature                       |                                               |
+|-------------------------------|-----------------------------------------------|
+| Controller release changelogs | [index.ts](./src/sources/controller/index.ts) |
 
 ### Development
 1. Run `yarn install`

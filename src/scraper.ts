@@ -6,10 +6,7 @@ import * as Sentry from '@sentry/node';
 import { readStore, writeStore } from './output';
 
 import fs from 'fs';
-import { News } from './sources/news/model';
-import news from './sources/news';
-import patchNotes from './sources/patch-notes';
-import { PatchNotes } from './sources/patch-notes/model';
+import controller from './sources/controller';
 
 const { NODE_ENV, SENTRY_DSN } = process.env;
 
@@ -25,48 +22,13 @@ try {
   fs.mkdirSync('traces');
 } catch (e) {}
 
-async function newsScrape(browser: Browser) {
-  async function tempFunc(
-    chainName: string,
-    workFunc: (browser: Browser) => Promise<News[]>
-  ) {
-    try {
-      const data = await workFunc(browser);
-
-      const store = readStore('news.json');
-      writeStore('news.json', {
-        ...store,
-        [chainName]: data,
-      });
-    } catch (e) {
-      console.error(e);
-      Sentry?.captureException(e);
-    }
+async function writeData(filename: string, data: any) {
+  try {
+    writeStore(filename, data);
+  } catch (e) {
+    console.error(e);
+    Sentry?.captureException(e);
   }
-
-  await Promise.all([tempFunc('news', news)]);
-}
-
-async function patchNotesScrape(browser: Browser) {
-  async function tempFunc(
-    chainName: string,
-    workFunc: (browser: Browser) => Promise<PatchNotes[]>
-  ) {
-    try {
-      const data = await workFunc(browser);
-
-      const store = readStore('patch-notes.json');
-      writeStore('patch-notes.json', {
-        ...store,
-        [chainName]: data,
-      });
-    } catch (e) {
-      console.error(e);
-      Sentry?.captureException(e);
-    }
-  }
-
-  await Promise.all([tempFunc('patch_notes', patchNotes)]);
 }
 
 async function scraper() {
@@ -76,8 +38,7 @@ async function scraper() {
     args: isProduction ? ['--no-sandbox'] : [],
   });
 
-  await newsScrape(browser);
-  await patchNotesScrape(browser);
+  await writeData('controller.json', await controller(browser));
 
   await browser.close();
 }
