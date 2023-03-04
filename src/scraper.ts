@@ -7,6 +7,7 @@ import * as Sentry from '@sentry/node';
 
 import fs from 'fs';
 import controller from './sources/controller';
+import generateFeed from './sources/controller/feed';
 
 const { NODE_ENV, SENTRY_DSN } = process.env;
 
@@ -37,6 +38,13 @@ async function scraper() {
   fs.writeFileSync(
     'output/controller.json',
     JSON.stringify(controllerReleases),
+    {
+      encoding: 'utf8',
+    }
+  );
+  fs.writeFileSync(
+    'output/controller.atom',
+    await generateFeed(controllerReleases),
     {
       encoding: 'utf8',
     }
