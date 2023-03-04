@@ -19,6 +19,7 @@
     "lodash": "^4.17.21",
     "puppeteer": "^19.7.2",
     "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "ts-polyfill": "^3.8.2",
     "turndown": "^7.0.0",
     "xast-util-to-xml": "^3.0.1"
