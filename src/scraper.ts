@@ -1,9 +1,9 @@
 import 'ts-polyfill/lib/es2019-array';
 
-import puppeteer, { Browser } from 'puppeteer';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
 import * as Sentry from '@sentry/node';
-import { readStore, writeStore } from './output';
 
 import fs from 'fs';
 import controller from './sources/controller';
@@ -22,23 +22,25 @@ try {
   fs.mkdirSync('traces');
 } catch (e) {}
 
-async function writeData(filename: string, data: any) {
-  try {
-    writeStore(filename, data);
-  } catch (e) {
-    console.error(e);
-    Sentry?.captureException(e);
-  }
-}
+try {
+  fs.mkdirSync('output');
+} catch (e) {}
 
 async function scraper() {
-  const browser = await puppeteer.launch({
+  const browser = await puppeteer.use(StealthPlugin()).launch({
     headless: isProduction,
     defaultViewport: null,
     args: isProduction ? ['--no-sandbox'] : [],
   });
 
-  await writeData('controller.json', await controller(browser));
+  const controllerReleases = await controller(browser);
+  fs.writeFileSync(
+    'output/controller.json',
+    JSON.stringify(controllerReleases),
+    {
+      encoding: 'utf8',
+    }
+  );
 
   await browser.close();
 }
