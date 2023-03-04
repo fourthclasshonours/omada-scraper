@@ -22,7 +22,9 @@ function generateEntry(release: Release): Element {
         children: [
           {
             type: 'text',
-            value: release.summary,
+            value: `v${release.version}${
+              release.platform ? ` for ${release.platform}` : ''
+            }`,
           },
         ],
       },
