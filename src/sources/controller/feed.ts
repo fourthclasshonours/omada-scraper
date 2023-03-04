@@ -52,12 +52,10 @@ function generateEntry(release: Release): Element {
       {
         type: 'element',
         name: 'link',
-        children: [
-          {
-            type: 'text',
-            value: release.link,
-          },
-        ],
+        attributes: {
+          href: release.link,
+        },
+        children: [],
       },
       {
         type: 'element',
@@ -83,6 +81,22 @@ function generateEntry(release: Release): Element {
         },
         children: [],
       },
+      {
+        type: 'element',
+        name: 'author',
+        children: [
+          {
+            type: 'element',
+            name: 'name',
+            children: [
+              {
+                type: 'text',
+                value: 'TP-Link',
+              },
+            ],
+          },
+        ],
+      },
     ],
   };
 }
@@ -103,58 +117,59 @@ export default async function generateFeed(
         name: 'feed',
         attributes: {
           xmlns: 'http://www.w3.org/2005/Atom',
-          version: '2.0',
         },
         children: [
           {
             type: 'element',
-            name: 'channel',
+            name: 'id',
             children: [
               {
-                type: 'element',
-                name: 'id',
-                children: [
-                  {
-                    type: 'text',
-                    value:
-                      'https://community.tp-link.com/en/business/forum/582?tagId=684,854',
-                  },
-                ],
+                type: 'text',
+                value:
+                  'https://community.tp-link.com/en/business/forum/582?tagId=684,854',
               },
-              {
-                type: 'element',
-                name: 'title',
-                children: [
-                  {
-                    type: 'text',
-                    value: 'Omada Release Changelogs',
-                  },
-                ],
-              },
-              {
-                type: 'element',
-                name: 'updated',
-                children: [
-                  {
-                    type: 'text',
-                    value: releases[0]?.date ?? new Date().toISOString(),
-                  },
-                ],
-              },
-              {
-                type: 'element',
-                name: 'link',
-                children: [
-                  {
-                    type: 'text',
-                    value:
-                      'https://community.tp-link.com/en/business/forum/582?tagId=684,854',
-                  },
-                ],
-              },
-              ...releases.map(generateEntry),
             ],
           },
+          {
+            type: 'element',
+            name: 'title',
+            children: [
+              {
+                type: 'text',
+                value: 'Omada Release Changelogs',
+              },
+            ],
+          },
+          {
+            type: 'element',
+            name: 'updated',
+            children: [
+              {
+                type: 'text',
+                value: releases[0]?.date ?? new Date().toISOString(),
+              },
+            ],
+          },
+          {
+            type: 'element',
+            name: 'link',
+            attributes: {
+              href:
+                'https://community.tp-link.com/en/business/forum/582?tagId=684,854',
+            },
+            children: [],
+          },
+          {
+            type: 'element',
+            name: 'link',
+            attributes: {
+              rel: 'self',
+              href:
+                'https://fourthclasshonours.github.io/omada-scraper/controller.atom',
+            },
+            children: [],
+          },
+          ...releases.map(generateEntry),
         ],
       },
     ],
