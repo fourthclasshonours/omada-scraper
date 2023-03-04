@@ -127,10 +127,22 @@
   resolved "https://registry.yarnpkg.com/@types/turndown/-/turndown-5.0.0.tgz#2b763b36f783e4e237cea62cdc8f8592b72b9285"
   integrity sha512-Y7KZn6SfSv1vzjByJGijrM9w99HoUbLiAgYwe+sGH6RYi5diIGLYOcr4Z1YqR2biFs9K5PnxKv/Fbkmh57pvzg==
 
+"@types/unist@*":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.6.tgz#250a7b16c3b91f672a24552ec64678eeb1d3a08d"
+  integrity sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==
+
 "@types/validator@^13.0.0":
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/@types/validator/-/validator-13.0.0.tgz#365f1bf936aeaddd0856fc41aa1d6f82d88ee5b3"
   integrity sha512-WAy5txG7aFX8Vw3sloEKp5p/t/Xt8jD3GRD9DacnFv6Vo8ubudAsRTXgxpQwU0mpzY/H8U4db3roDuCMjShBmw==
+
+"@types/xast@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/xast/-/xast-1.0.2.tgz#1eeb4b3c6e00e9f8bd848765ce1a22d183abe37f"
+  integrity sha512-eIuX49CmWaXTh0hDEQTFH5MbTV+NPm0FM5gB36nDcr9x8n75t9o7wy2guS1lakkQxtUwfVDYiokqvHk3x0CC4Q==
+  dependencies:
+    "@types/unist" "*"
 
 "@types/yauzl@^2.9.1":
   version "2.10.0"
