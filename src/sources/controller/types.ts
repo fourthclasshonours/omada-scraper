@@ -4,6 +4,7 @@ export interface Release {
   version: string;
   summary: string;
   body: string;
+  body_html: string;
   date: string;
   link: string;
   platform: string | null;

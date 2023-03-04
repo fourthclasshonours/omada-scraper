@@ -35,7 +35,7 @@ function generateEntry(release: Release): Element {
         children: [
           {
             type: 'text',
-            value: release.body,
+            value: release.body_html,
           },
         ],
       },

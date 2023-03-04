@@ -100,6 +100,7 @@ export default async function controller(browser: Browser): Promise<Release[]> {
 
     const release: Release = {
       body: turndownService.turndown(postBody),
+      body_html: postBody,
       link,
       summary,
       type: getReleaseType(controllerMatches[1]),
